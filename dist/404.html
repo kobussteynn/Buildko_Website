@@ -1,17 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Redirecting...</title>
+    <script>
+      (function () {
+        var location = window.location;
+        var redirect =
+          location.protocol +
+          "//" +
+          location.host +
+          "/?/" +
+          location.pathname.slice(1).replace(/&/g, "~and~") +
+          (location.search ? "&" + location.search.slice(1).replace(/&/g, "~and~") : "") +
+          location.hash;
 
-    <!-- Redirect for GitHub Pages SPA -->
-    <meta http-equiv="refresh" content="0; url=/" />
-</head>
-
-<body>
+        location.replace(redirect);
+      })();
+    </script>
+  </head>
+  <body>
     <p>Redirecting...</p>
-</body>
-
+  </body>
 </html>

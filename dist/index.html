@@ -5,8 +5,23 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>buildko</title>
-    <script type="module" crossorigin src="/assets/index-BvUoVtrB.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-CHcklXgQ.css">
+    <script>
+      (function (location) {
+        if (location.search.startsWith("?/")) {
+          const decoded = location.search
+            .slice(2)
+            .split("&")
+            .map(function (segment) {
+              return segment.replace(/~and~/g, "&");
+            })
+            .join("?");
+
+          window.history.replaceState(null, "", "/" + decoded + location.hash);
+        }
+      })(window.location);
+    </script>
+    <script type="module" crossorigin src="/assets/index-C7sBKzN9.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-C168vIUm.css">
   </head>
   <body>
     <div id="root"></div>

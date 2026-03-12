@@ -1,5 +1,6 @@
-// src/components/SecondSection.jsx
+// src/layouts/Home/SecondSection.jsx
 import * as React from "react";
+import { Link } from "react-router-dom";
 import { Building2, Home, MapPin, ClipboardList, HardHat, CheckCircle2, ArrowRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -32,16 +33,14 @@ export default function SecondSection() {
   const quoteHref = "/contact?reason=quote";
 
   return (
-    <section className="w-full py-16">
+    <section id="projects" className="w-full scroll-mt-32 py-16">
       <div className="mx-auto max-w-7xl px-4 lg:px-6">
-        {/* Different layout: split panel with strong visual left side */}
         <div className="overflow-hidden rounded-3xl border bg-background">
           <div className="grid lg:grid-cols-12">
-            {/* Left visual panel */}
             <div className="lg:col-span-5">
               <div className="h-full bg-gradient-to-br from-teal-600 to-teal-500 p-8 text-white md:p-10">
                 <div className="inline-flex items-center rounded-full bg-white/15 px-3 py-1 text-xs font-medium">
-                  New builds • Managed end-to-end
+                  New builds - Managed end-to-end
                 </div>
 
                 <h3 className="mt-4 text-2xl font-semibold tracking-tight md:text-3xl">
@@ -50,10 +49,9 @@ export default function SecondSection() {
 
                 <p className="mt-3 max-w-md text-white/90">
                   From planning to final handover, we run the build with clear communication,
-                  tight site management, and finishes you’ll be proud of.
+                  tight site management, and finishes you will be proud of.
                 </p>
 
-                {/* quick “tiles” (not cards) */}
                 <div className="mt-7 grid grid-cols-3 gap-3">
                   <div className="rounded-2xl bg-white/10 p-3">
                     <div className="text-xs text-white/80">Built for</div>
@@ -71,18 +69,16 @@ export default function SecondSection() {
 
                 <div className="mt-8">
                   <Button asChild className="rounded-full bg-white text-teal-700 hover:bg-white/90">
-                    <a href={quoteHref} className="inline-flex items-center gap-2 font-semibold">
+                    <Link to={quoteHref} className="inline-flex items-center gap-2 font-semibold">
                       Request a Quote <ArrowRight className="h-4 w-4" />
-                    </a>
+                    </Link>
                   </Button>
                 </div>
               </div>
             </div>
 
-            {/* Right content panel */}
             <div className="lg:col-span-7">
               <div className="p-8 md:p-10">
-                {/* Project types as rows */}
                 <div className="flex items-end justify-between gap-6">
                   <div>
                     <div className="text-xs font-medium text-muted-foreground">What we build</div>
@@ -92,10 +88,10 @@ export default function SecondSection() {
                 </div>
 
                 <div className="mt-6 space-y-6">
-                  {PROJECTS.map((p) => {
-                    const Icon = p.icon;
+                  {PROJECTS.map((project) => {
+                    const Icon = project.icon;
                     return (
-                      <div key={p.title} className="grid gap-4 sm:grid-cols-12">
+                      <div key={project.title} className="grid gap-4 sm:grid-cols-12">
                         <div className="sm:col-span-2">
                           <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-teal-500/10">
                             <Icon className="h-5 w-5 text-teal-700" />
@@ -103,12 +99,12 @@ export default function SecondSection() {
                         </div>
 
                         <div className="sm:col-span-10">
-                          <div className="text-base font-semibold">{p.title}</div>
+                          <div className="text-base font-semibold">{project.title}</div>
                           <ul className="mt-2 grid gap-2 sm:grid-cols-3">
-                            {p.points.map((pt) => (
-                              <li key={pt} className="flex items-start gap-2 text-sm text-muted-foreground">
+                            {project.points.map((point) => (
+                              <li key={point} className="flex items-start gap-2 text-sm text-muted-foreground">
                                 <span className="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-teal-600" />
-                                <span>{pt}</span>
+                                <span>{point}</span>
                               </li>
                             ))}
                           </ul>
@@ -118,16 +114,15 @@ export default function SecondSection() {
                   })}
                 </div>
 
-                {/* Vertical timeline process */}
                 <div className="mt-10">
                   <div className="text-xs font-medium text-muted-foreground">How we work</div>
                   <div className="mt-1 text-lg font-semibold">A simple process</div>
 
                   <div className="mt-6 space-y-5">
-                    {STEPS.map((s, idx) => {
-                      const Icon = s.icon;
+                    {STEPS.map((step, idx) => {
+                      const Icon = step.icon;
                       return (
-                        <div key={s.title} className="relative pl-10">
+                        <div key={step.title} className="relative pl-10">
                           {idx < STEPS.length - 1 ? (
                             <div className="absolute left-[18px] top-9 h-[calc(100%-12px)] w-px bg-border" />
                           ) : null}
@@ -138,9 +133,9 @@ export default function SecondSection() {
 
                           <div className="rounded-2xl border bg-muted/10 p-4">
                             <div className="text-sm font-semibold">
-                              {idx + 1}. {s.title}
+                              {idx + 1}. {step.title}
                             </div>
-                            <p className="mt-1 text-sm text-muted-foreground">{s.desc}</p>
+                            <p className="mt-1 text-sm text-muted-foreground">{step.desc}</p>
                           </div>
                         </div>
                       );
@@ -148,7 +143,7 @@ export default function SecondSection() {
                   </div>
 
                   <p className="mt-4 text-xs text-muted-foreground">
-                    Share your plans or a short brief — we’ll respond with next steps and a clear quote.
+                    Share your plans or a short brief - we will respond with next steps and a clear quote.
                   </p>
                 </div>
               </div>

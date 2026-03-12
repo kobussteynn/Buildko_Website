@@ -1,12 +1,13 @@
-// src/components/HomeIntroSection.jsx
+// src/layouts/Home/FirstSection.jsx
 import * as React from "react";
+import { Link } from "react-router-dom";
 import { CheckCircle2, Clock, ShieldCheck, ArrowRight, MessageCircle } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
 const COMPANY = {
-  area: "Mossel Bay – George, South Africa",
+  area: "Mossel Bay - George, South Africa",
   whatsappE164NoPlus: "27815864848",
 };
 
@@ -14,7 +15,7 @@ const HIGHLIGHTS = [
   {
     icon: ShieldCheck,
     title: "End-to-end builds",
-    desc: "We take care of the full build — from planning and scheduling to final handover.",
+    desc: "We take care of the full build - from planning and scheduling to final handover.",
   },
   {
     icon: CheckCircle2,
@@ -43,28 +44,26 @@ export default function HomeIntroSection() {
     <section className="w-full py-14">
       <div className="mx-auto max-w-7xl px-4 lg:px-6">
         <div className="grid gap-8 lg:grid-cols-12 lg:items-start">
-          {/* Left: copy */}
           <div className="lg:col-span-7">
             <div className="inline-flex items-center rounded-full border bg-background/60 px-3 py-1 text-xs font-medium text-muted-foreground backdrop-blur">
               Serving {COMPANY.area}
             </div>
 
             <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-4xl">
-              Build once, build right —{" "}
-              <span className="text-teal-600">new builds</span> with solid finishes.
+              Build once, build right - <span className="text-teal-600">new builds</span> with solid finishes.
             </h2>
 
             <p className="mt-3 max-w-2xl text-muted-foreground">
               Planning a new build? We deliver apartment blocks, estates, and houses with hands-on
-              project management, neat workmanship, and finishes that last — so the build runs smoothly
+              project management, neat workmanship, and finishes that last - so the build runs smoothly
               from start to sign-off.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-3">
               <Button asChild className="rounded-full bg-teal-500 text-white hover:bg-teal-600">
-                <a href={quoteHref} className="inline-flex items-center gap-2 font-semibold">
+                <Link to={quoteHref} className="inline-flex items-center gap-2 font-semibold">
                   Get a Quote <ArrowRight className="h-4 w-4" />
-                </a>
+                </Link>
               </Button>
 
               <Button asChild variant="outline" className="rounded-full">
@@ -90,7 +89,6 @@ export default function HomeIntroSection() {
             </div>
           </div>
 
-          {/* Right: cards */}
           <div className="lg:col-span-5">
             <div className="grid gap-4">
               {HIGHLIGHTS.map((h) => {
@@ -115,7 +113,7 @@ export default function HomeIntroSection() {
               <div className="rounded-2xl border bg-muted/10 p-5">
                 <div className="text-sm font-semibold">Fast quote turnaround</div>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  Send your plans, BOQ, or a short brief on WhatsApp — we’ll review it and come back with
+                  Send your plans, BOQ, or a short brief on WhatsApp - we will review it and come back with
                   clear next steps and a straight quote.
                 </p>
                 <div className="mt-4">

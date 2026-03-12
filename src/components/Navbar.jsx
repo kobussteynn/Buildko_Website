@@ -1,5 +1,6 @@
 // src/components/Navbar.jsx
 import * as React from "react";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { Menu, Phone, Mail, MapPin, MessageCircle, ChevronRight, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -35,7 +36,7 @@ const PROJECTS = [
 
 const COMPANY = {
   name: "Buildko",
-  area: "Mossel Bay – George, South Africa",
+  area: "Mossel Bay - George, South Africa",
   email: "kobussteyn24@gmail.com",
   phone: "0815864848",
   whatsappE164NoPlus: "27815864848",
@@ -84,14 +85,14 @@ function TopUtilityBar() {
           <div className="flex items-center gap-4">
             <a
               href={telHref}
-              className="inline-flex items-center gap-2 text-zinc-300 hover:text-white transition"
+              className="inline-flex items-center gap-2 text-zinc-300 transition hover:text-white"
             >
               <Phone className="h-4 w-4 text-zinc-400" />
               {COMPANY.phone}
             </a>
             <a
               href={mailHref}
-              className="inline-flex items-center gap-2 text-zinc-300 hover:text-white transition"
+              className="inline-flex items-center gap-2 text-zinc-300 transition hover:text-white"
             >
               <Mail className="h-4 w-4 text-zinc-400" />
               {COMPANY.email}
@@ -104,18 +105,17 @@ function TopUtilityBar() {
 }
 
 function DesktopNav() {
-  const currentPath = typeof window !== "undefined" ? window.location.pathname : "";
+  const { pathname } = useLocation();
 
   return (
     <div className="hidden md:flex items-center gap-2 lg:gap-3">
-      {/* Tablet: simple links */}
       <div className="flex lg:hidden items-center gap-1 rounded-full border bg-background/60 p-1 shadow-sm backdrop-blur">
         {NAV.map((item) => {
-          const active = currentPath === item.href;
+          const active = pathname === item.href;
           return (
-            <a
+            <NavLink
               key={item.href}
-              href={item.href}
+              to={item.href}
               className={cx(
                 "rounded-full px-3 py-2 text-sm font-medium transition whitespace-nowrap",
                 active
@@ -124,26 +124,26 @@ function DesktopNav() {
               )}
             >
               {item.label}
-            </a>
+            </NavLink>
           );
         })}
-        <a
-          href="/#projects"
-          className="rounded-full px-3 py-2 text-sm font-medium transition whitespace-nowrap text-muted-foreground hover:text-foreground hover:bg-muted"
+
+        <Link
+          to="/#projects"
+          className="rounded-full px-3 py-2 text-sm font-medium whitespace-nowrap text-muted-foreground transition hover:text-foreground hover:bg-muted"
         >
           Projects
-        </a>
+        </Link>
       </div>
 
-      {/* Desktop: pill + dropdown */}
       <div className="hidden lg:flex items-center gap-3">
         <div className="flex items-center rounded-full border bg-background/60 p-1 shadow-sm backdrop-blur">
           {NAV.map((item) => {
-            const active = currentPath === item.href;
+            const active = pathname === item.href;
             return (
-              <a
+              <NavLink
                 key={item.href}
-                href={item.href}
+                to={item.href}
                 className={cx(
                   "rounded-full px-4 py-2 text-sm font-medium transition",
                   active
@@ -152,7 +152,7 @@ function DesktopNav() {
                 )}
               >
                 {item.label}
-              </a>
+              </NavLink>
             );
           })}
         </div>
@@ -168,14 +168,14 @@ function DesktopNav() {
                     A glimpse of our work and finishes.
                   </p>
                   <div className="mt-3 grid gap-2">
-                    {PROJECTS.map((p) => (
-                      <a
-                        key={p.label}
-                        href={p.href}
-                        className="rounded-lg border bg-muted/20 px-3 py-2 text-sm hover:bg-muted transition"
+                    {PROJECTS.map((project) => (
+                      <Link
+                        key={project.label}
+                        to={project.href}
+                        className="rounded-lg border bg-muted/20 px-3 py-2 text-sm transition hover:bg-muted"
                       >
-                        {p.label}
-                      </a>
+                        {project.label}
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -220,15 +220,15 @@ function MobileBottomBar({ telHref, waHref, quoteHref }) {
             asChild
             className="col-span-3 rounded-2xl h-11 bg-teal-500 text-white hover:bg-teal-600"
           >
-            <a href={quoteHref} className="inline-flex items-center justify-center gap-2 font-semibold">
+            <Link to={quoteHref} className="inline-flex items-center justify-center gap-2 font-semibold">
               Get a Quote
               <ChevronRight className="h-4 w-4" />
-            </a>
+            </Link>
           </Button>
         </div>
 
-        <div className="mt-2 text-[11px] text-muted-foreground text-center">
-          Free quotes • Fast response on WhatsApp
+        <div className="mt-2 text-[11px] text-center text-muted-foreground">
+          Free quotes - Fast response on WhatsApp
         </div>
       </div>
     </div>
@@ -258,8 +258,7 @@ export default function Navbar() {
           )}
         >
           <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 lg:px-6">
-            {/* Brand */}
-            <a href="/" className="flex items-center gap-3 min-w-0">
+            <Link to="/" className="flex items-center gap-3 min-w-0">
               <div className="relative shrink-0">
                 <div className="h-10 w-10 overflow-hidden rounded-2xl border bg-white shadow-sm">
                   <img
@@ -282,45 +281,42 @@ export default function Navbar() {
                   Quality builds. Solid finishes.
                 </div>
               </div>
-            </a>
+            </Link>
 
-            {/* Desktop nav */}
             <DesktopNav />
 
-            {/* Desktop CTAs */}
             <div className="hidden md:flex items-center gap-2">
               <Button asChild variant="outline" className="rounded-full">
-                <a href={telHref} className="gap-2 inline-flex items-center">
+                <a href={telHref} className="inline-flex items-center gap-2">
                   <Phone className="h-4 w-4" />
                   Call
                 </a>
               </Button>
 
               <Button asChild variant="outline" className="rounded-full">
-                <a href={waHref} target="_blank" rel="noreferrer" className="gap-2 inline-flex items-center">
+                <a href={waHref} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2">
                   <MessageCircle className="h-4 w-4" />
                   WhatsApp
                 </a>
               </Button>
 
               <Button asChild className="rounded-full bg-teal-500 text-white hover:bg-teal-600">
-                <a href={quoteHref} className="gap-2 inline-flex items-center font-semibold">
+                <Link to={quoteHref} className="inline-flex items-center gap-2 font-semibold">
                   Get a Quote
                   <ChevronRight className="h-4 w-4" />
-                </a>
+                </Link>
               </Button>
             </div>
 
-            {/* Mobile actions: Quote + Menu */}
             <div className="md:hidden flex items-center gap-2 shrink-0">
               <Button
                 asChild
-                className="rounded-2xl h-11 bg-teal-500 text-white hover:bg-teal-600 px-4"
+                className="rounded-2xl h-11 bg-teal-500 px-4 text-white hover:bg-teal-600"
               >
-                <a href={quoteHref} className="inline-flex items-center gap-2 font-semibold">
+                <Link to={quoteHref} className="inline-flex items-center gap-2 font-semibold">
                   Quote
                   <ChevronRight className="h-4 w-4" />
-                </a>
+                </Link>
               </Button>
 
               <Sheet open={open} onOpenChange={setOpen}>
@@ -335,9 +331,7 @@ export default function Navbar() {
                   </Button>
                 </SheetTrigger>
 
-                {/* ✅ UPDATED: scrollable nav area */}
                 <SheetContent side="right" className="w-[92vw] max-w-[420px] p-0 flex flex-col">
-                  {/* Sticky header */}
                   <div className="sticky top-0 z-10 border-b bg-background/80 backdrop-blur">
                     <div className="p-5">
                       <SheetHeader>
@@ -370,7 +364,6 @@ export default function Navbar() {
                     </div>
                   </div>
 
-                  {/* Scrollable content */}
                   <div className="flex-1 overflow-y-auto p-5 pb-28">
                     <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                       Pages
@@ -378,36 +371,36 @@ export default function Navbar() {
 
                     <div className="mt-3 grid gap-2">
                       {NAV.map((item) => (
-                        <a
+                        <NavLink
                           key={item.href}
-                          href={item.href}
+                          to={item.href}
                           onClick={close}
-                          className="flex items-center justify-between rounded-2xl border bg-muted/20 px-4 py-4 text-base font-semibold hover:bg-muted transition"
+                          className="flex items-center justify-between rounded-2xl border bg-muted/20 px-4 py-4 text-base font-semibold transition hover:bg-muted"
                         >
                           {item.label}
                           <ChevronRight className="h-5 w-5 text-muted-foreground" />
-                        </a>
+                        </NavLink>
                       ))}
 
-                      <a
-                        href="/#projects"
+                      <Link
+                        to="/#projects"
                         onClick={close}
-                        className="flex items-center justify-between rounded-2xl border bg-muted/20 px-4 py-4 text-base font-semibold hover:bg-muted transition"
+                        className="flex items-center justify-between rounded-2xl border bg-muted/20 px-4 py-4 text-base font-semibold transition hover:bg-muted"
                       >
                         Projects
                         <ChevronRight className="h-5 w-5 text-muted-foreground" />
-                      </a>
+                      </Link>
 
                       <div className="grid gap-2 pl-1">
-                        {PROJECTS.map((p) => (
-                          <a
-                            key={p.label}
-                            href={p.href}
+                        {PROJECTS.map((project) => (
+                          <Link
+                            key={project.label}
+                            to={project.href}
                             onClick={close}
-                            className="rounded-2xl border bg-background px-4 py-3 text-sm text-muted-foreground hover:bg-muted transition"
+                            className="rounded-2xl border bg-background px-4 py-3 text-sm text-muted-foreground transition hover:bg-muted"
                           >
-                            {p.label}
-                          </a>
+                            {project.label}
+                          </Link>
                         ))}
                       </div>
                     </div>
@@ -422,7 +415,7 @@ export default function Navbar() {
                       <a
                         href={telHref}
                         onClick={close}
-                        className="rounded-2xl border px-4 py-4 hover:bg-muted transition"
+                        className="rounded-2xl border px-4 py-4 transition hover:bg-muted"
                       >
                         <div className="flex items-center gap-3">
                           <div className="h-10 w-10 rounded-2xl bg-teal-500/10 flex items-center justify-center">
@@ -440,7 +433,7 @@ export default function Navbar() {
                         target="_blank"
                         rel="noreferrer"
                         onClick={close}
-                        className="rounded-2xl border px-4 py-4 hover:bg-muted transition"
+                        className="rounded-2xl border px-4 py-4 transition hover:bg-muted"
                       >
                         <div className="flex items-center gap-3">
                           <div className="h-10 w-10 rounded-2xl bg-teal-500/10 flex items-center justify-center">
@@ -456,7 +449,7 @@ export default function Navbar() {
                       <a
                         href={mailHref}
                         onClick={close}
-                        className="rounded-2xl border px-4 py-4 hover:bg-muted transition"
+                        className="rounded-2xl border px-4 py-4 transition hover:bg-muted"
                       >
                         <div className="flex items-center gap-3">
                           <div className="h-10 w-10 rounded-2xl bg-teal-500/10 flex items-center justify-center">
@@ -470,10 +463,10 @@ export default function Navbar() {
                       </a>
 
                       <Button asChild className="rounded-2xl h-12 bg-teal-500 text-white hover:bg-teal-600">
-                        <a href={quoteHref} onClick={close} className="gap-2 inline-flex items-center font-semibold">
+                        <Link to={quoteHref} onClick={close} className="inline-flex items-center gap-2 font-semibold">
                           Get a Quote
                           <ChevronRight className="h-5 w-5" />
-                        </a>
+                        </Link>
                       </Button>
                     </div>
 
@@ -482,10 +475,9 @@ export default function Navbar() {
                     </p>
                   </div>
 
-                  {/* Sticky footer */}
                   <div className="shrink-0 border-t bg-zinc-950 px-6 py-4 text-zinc-100">
                     <div className="text-xs text-zinc-300">
-                      Free quotes • Fast response on WhatsApp • Professional workmanship
+                      Free quotes - Fast response on WhatsApp - Professional workmanship
                     </div>
                   </div>
                 </SheetContent>
@@ -497,7 +489,6 @@ export default function Navbar() {
         </div>
       </header>
 
-      {/* Space so page content isn't hidden behind bottom bar */}
       <div className="md:hidden h-[96px]" />
 
       <MobileBottomBar telHref={telHref} waHref={waHref} quoteHref={quoteHref} />
