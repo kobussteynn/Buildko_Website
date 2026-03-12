@@ -11,9 +11,12 @@ import { Card, CardContent } from "@/components/ui/card";
  * - label shows in the list + tooltip
  */
 const PINS = [
-  { id: "p1", label: "Project 01 – Mossel Bay", lat: -34.1831, lng: 22.1460 },
-  { id: "p2", label: "Project 02 – George", lat: -33.9630, lng: 22.4617 },
-  { id: "p3", label: "Project 03 – Hartenbos", lat: -34.1126, lng: 22.1120 },
+  { id: "p1", label: "Hartenbos Landgoed – Mossel Bay", lat: -34.113216754079076, lng: 22.11737480262755 },
+  { id: "p2", label: "Dana Bay Development", lat: -34.1919556439398, lng: 22.048265243302723 },
+  { id: "p3", label: "Nautilus Bay Residence", lat: -34.21356989129585, lng: 21.97173712078047 }, 
+  { id: "p4", label: "Hersham Luxury Homes", lat: -34.05345985961307, lng: 22.24988225543243 },
+  { id: "p5", label: "Village on Sea", lat: -34.1970797619802, lng: 22.117796411526957}, 
+  { id: "p6", label: "Fancourt Lodge 822 Alteration", lat: -33.95475845530564, lng: 22.407250118265864 }, 
 ];
 
 function toEmbedUrl({ lat, lng, zoom = 11 }) {
@@ -114,8 +117,8 @@ export default function WorkMapSection() {
                 ) : null}
 
                 <p className="mt-4 text-xs text-muted-foreground">
-                  Tip: Replace the sample pins in <span className="font-medium">PINS</span> with your real
-                  coordinates (lat/lng).
+                  These markers highlight some of the areas where we’ve completed projects across the Garden Route.
+                  Select a location to view it on the map and get directions.
                 </p>
               </CardContent>
             </Card>
@@ -150,9 +153,8 @@ export default function WorkMapSection() {
             </div>
 
             <div className="mt-3 text-xs text-muted-foreground">
-              Want true “multiple pins on one map”? You can do that with a Google My Maps link or the Google
-              Maps JavaScript API. This section keeps it simple (no API key) and lets users click through
-              pins quickly.
+              Our projects span multiple locations across the region. Explore the pins to see where our
+              team has delivered quality construction and development work.
             </div>
           </div>
         </div>
