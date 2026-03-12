@@ -12,7 +12,7 @@ import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <BrowserRouter basename="/Buildko_Website/">
+    <BrowserRouter basename="/">
       <Routes>
         {/* Main layout wrapper */}
         <Route path="/" element={<App />}>
