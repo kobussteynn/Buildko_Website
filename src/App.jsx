@@ -6,7 +6,9 @@ export default function App() {
   return (
     <>
       <Navbar />
-      <Outlet />
+      <main className="pb-[96px] md:pb-0">
+        <Outlet />
+      </main>
       <Footer />
     </>
   );

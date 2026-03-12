@@ -489,9 +489,8 @@ export default function Navbar() {
         </div>
       </header>
 
-      <div className="md:hidden h-[96px]" />
-
       <MobileBottomBar telHref={telHref} waHref={waHref} quoteHref={quoteHref} />
     </>
   );
 }
+
