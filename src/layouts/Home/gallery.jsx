@@ -29,13 +29,10 @@ const SLIDES = [
 ];
 
 export default function GalleryAutoScroll() {
-  // stay -> slide -> stay
   const HOLD_MS = 3000;
   const MOVE_MS = 900;
 
   const [paused, setPaused] = React.useState(false);
-
-  // pos includes a clone at the end for looping (0..SLIDES.length)
   const [pos, setPos] = React.useState(0);
   const [animating, setAnimating] = React.useState(true);
 
@@ -51,24 +48,23 @@ export default function GalleryAutoScroll() {
 
   const activeIndex = pos === SLIDES.length ? 0 : pos;
 
-  // auto-advance after HOLD_MS
   React.useEffect(() => {
     clearTimers();
     if (paused) return;
 
     timerRef.current = window.setTimeout(() => {
       setAnimating(true);
-      setPos((p) => p + 1);
+      setPos((p) => (p >= SLIDES.length ? p : p + 1));
     }, HOLD_MS);
 
     return () => clearTimers();
-  }, [pos, paused, HOLD_MS, clearTimers]);
+  }, [pos, paused, clearTimers]);
 
   const onTransitionEnd = () => {
-    // seamless loop: when we slide onto the clone, instantly jump back to real 0
     if (pos === SLIDES.length) {
       setAnimating(false);
       setPos(0);
+
       rafRef.current = window.requestAnimationFrame(() => {
         rafRef.current = window.requestAnimationFrame(() => setAnimating(true));
       });
@@ -78,8 +74,10 @@ export default function GalleryAutoScroll() {
   const goNext = () => {
     clearTimers();
     setPaused(true);
+
     setAnimating(true);
-    setPos((p) => p + 1);
+    setPos((p) => (p >= SLIDES.length ? p : p + 1));
+
     window.setTimeout(() => setPaused(false), HOLD_MS);
   };
 
@@ -88,9 +86,9 @@ export default function GalleryAutoScroll() {
     setPaused(true);
 
     if (pos === 0) {
-      // jump to clone (no animation), then animate back to last real slide
       setAnimating(false);
       setPos(SLIDES.length);
+
       rafRef.current = window.requestAnimationFrame(() => {
         rafRef.current = window.requestAnimationFrame(() => {
           setAnimating(true);
@@ -116,32 +114,28 @@ export default function GalleryAutoScroll() {
         <div
           className="absolute inset-0 flex will-change-transform"
           style={{
-            width: `${(SLIDES.length + 1) * 100}vw`,
-            transform: `translate3d(-${pos * 100}vw, 0, 0)`,
+            width: `${(SLIDES.length + 1) * 100}%`,
+            transform: `translateX(-${pos * (100 / (SLIDES.length + 1))}%)`,
             transition: animating
               ? `transform ${MOVE_MS}ms cubic-bezier(0.22, 1, 0.36, 1)`
               : "none",
           }}
           onTransitionEnd={onTransitionEnd}
         >
-          {/* Real slides (no backgrounds, no gaps) */}
           {SLIDES.map((s) => (
-            <div key={s.alt} className="relative h-full w-screen shrink-0">
-              {/* Fills the whole slide. No black bars. */}
+            <div key={s.alt} className="relative h-full w-full shrink-0">
               <img
                 src={s.image}
                 alt={s.alt}
                 className="h-full w-full object-cover"
                 draggable={false}
               />
-
-              {/* Optional: subtle vignette for readability */}
               <div className="pointer-events-none absolute inset-0 bg-black/10" />
             </div>
           ))}
 
           {/* Clone first slide */}
-          <div className="relative h-full w-screen shrink-0">
+          <div className="relative h-full w-full shrink-0">
             <img
               src={SLIDES[0].image}
               alt={SLIDES[0].alt}
